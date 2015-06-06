@@ -1,0 +1,18 @@
+<package>
+  <description brief="Gaussian Processes Odometry">
+  Odometry C++ library for accessing Gaussian Processes method in Python
+  </description>
+  <author>Javier Hidalgo-Carrio/javier.hidalgo_carrio@dfki.de</author>
+  <license></license>
+  <url>http://</url>
+  <logo>http://</logo>
+  <depend package="base/cmake" />
+  <!--
+   To add any dependencies use the depend tag
+  <depend package="dummy-dependency-0" />
+	...
+  <depend package="dummy-dependency-n-1" />
+  <depend package="dummy-dependency-n" />
+  -->
+  <depend package="base/types" />
+</package>
