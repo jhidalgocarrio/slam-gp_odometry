@@ -1,3 +1,3 @@
 rock_testsuite(test_suite suite.cpp
-   test_Dummy.cpp
+   test_gp_odometry.cpp
    DEPS gp_odometry)
