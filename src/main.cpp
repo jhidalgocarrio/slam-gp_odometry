@@ -4,7 +4,7 @@ int main()
 {
     gp_odometry::Sklearn gp;
 
-    gp.init("./data/gp_sklearn.out");
+    gp.init("./data/gp_sklearn_x_axis.data");
     gp.getParams();
     std::vector<double> kernel_params = gp.kernel_();
     std::cout<<"Kernel parameters: ";
@@ -25,11 +25,7 @@ int main()
 
     std::vector<double> input_vector(arr, arr + sizeof(arr) / sizeof(arr[0]));
 
-    std::vector<double> output_vector = gp.predict(input_vector);
-    std::cout<<"Predict: ";
-    for (std::vector<double>::const_iterator i = output_vector.begin(); i != output_vector.end(); ++i)
-    {
-        std::cout << *i << ' ';
-    }
-    std::cout<<"\n";
+    double output = gp.predict(input_vector);
+    std::cout<<"Predict: "<<output<<"\n";
 }
+
