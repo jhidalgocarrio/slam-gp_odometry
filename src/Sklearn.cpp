@@ -85,7 +85,7 @@ namespace gp_odometry
         }
         expression += "])\n";
         expression += "mean_out, cov_out = gp.predict(Xp, return_cov=True)\n";
-        expression += "print mean_out\n";
+        //expression += "print mean_out\n";
         boost::python::str str_expression(expression);
         boost::python::object ignored = boost::python::exec(str_expression, this->main_namespace);
         boost::python::object mean_out = this->main_namespace["mean_out"];
