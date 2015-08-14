@@ -33,7 +33,7 @@ namespace gp_odometry
 
             /**
              */
-            double predict(const std::vector<double> &new_input);
+            double predict(const std::vector<double> &new_input, double &prediction_var);
 
 
 			/**

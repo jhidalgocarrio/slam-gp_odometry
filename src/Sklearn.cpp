@@ -21,7 +21,7 @@ namespace gp_odometry
         expression += "gp = open_object('";
         expression += file_to_load;
         expression += "')\n";
-        expression += "print gp.kernel_\n";
+        //expression += "print gp.kernel_\n";
         boost::python::str str_expression(expression);
 
         try
@@ -75,7 +75,7 @@ namespace gp_odometry
         return vector_out;
     }
 
-    double Sklearn::predict(const std::vector<double> &new_input)
+    double Sklearn::predict(const std::vector<double> &new_input, double &prediction_var)
     {
         std::string expression;
         expression = "Xp = np.array([";
@@ -84,12 +84,13 @@ namespace gp_odometry
             expression += boost::lexical_cast<std::string>(*i)+", ";
         }
         expression += "])\n";
-        expression += "mean_out, cov_out = gp.predict(Xp, eval_MSE=True)\n";
-        expression += "print mean_out cov_out\n";
+        expression += "mean_out, var_out = gp.predict(Xp, eval_MSE=True)\n";
         boost::python::str str_expression(expression);
         boost::python::object ignored = boost::python::exec(str_expression, this->main_namespace);
         boost::python::object mean_out = this->main_namespace["mean_out"];
+        boost::python::object var_out = this->main_namespace["var_out"];
         double prediction = boost::python::extract<double>(mean_out[0]);
+        prediction_var = boost::python::extract<double>(var_out[0]);
 
         return prediction;
 
