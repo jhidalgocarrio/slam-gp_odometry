@@ -21,19 +21,30 @@ namespace gp_odometry
 
             /**
              */
-            void init(const std::string &file_to_load);
+            void init(const std::string &file_to_load, const std::string &object_name);
 
             /**
              */
-            void getParams();
+            void getParams(const std::string &object_name);
+
+            /**@brief Get Kernel parameters
+             *
+             * When using the DFKI gp module
+             *
+             */
+            std::vector<double> kernel_(const std::string &object_name);
+
+            /**@brief Get Kernel parameters
+             *
+             * When using the Sklearn alone
+             *
+             */
+            std::vector<double> theta_(const std::string &object_name);
+
 
             /**
              */
-            std::vector<double> kernel_();
-
-            /**
-             */
-            double predict(const std::vector<double> &new_input, double &prediction_var);
+            double predict(const std::string &object_name, const std::vector<double> &new_input, double &prediction_var);
 
 
 			/**

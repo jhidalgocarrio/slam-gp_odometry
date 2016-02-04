@@ -3,7 +3,7 @@
 namespace gp_odometry
 {
 
-    void Sklearn::init(const std::string &file_to_load)
+    void Sklearn::init(const std::string &file_to_load, const std::string &object_name)
     {
         Py_Initialize();
 
@@ -18,10 +18,9 @@ namespace gp_odometry
         expression += "def open_object(filename):\n";
         expression += "\twith open(filename, 'rb') as input:\n";
         expression += "\t\treturn pickle.load(input)\n";
-        expression += "gp = open_object('";
+        expression += object_name + " = open_object('";
         expression += file_to_load;
         expression += "')\n";
-        //expression += "print gp.kernel_\n";
         boost::python::str str_expression(expression);
 
         try
@@ -46,18 +45,18 @@ namespace gp_odometry
         return;
     }
 
-    void Sklearn::getParams()
+    void Sklearn::getParams(const std::string &object_name)
     {
         std::string expression;
-        expression = "print gp.get_params\n";
+        expression = "print "+object_name+".get_params\n";
         boost::python::str str_expression(expression);
         boost::python::object ignored = boost::python::exec(str_expression, this->main_namespace);
     }
 
-    std::vector<double> Sklearn::kernel_()
+    std::vector<double> Sklearn::kernel_(const std::string &object_name)
     {
         std::string expression;
-        expression = "out = gp.kernel_.theta\n";
+        expression = "out = "+object_name+".kernel_.theta\n";
         boost::python::str str_expression(expression);
         boost::python::object ignored = boost::python::exec(str_expression, this->main_namespace);
         boost::python::object out = this->main_namespace["out"];
@@ -75,7 +74,20 @@ namespace gp_odometry
         return vector_out;
     }
 
-    double Sklearn::predict(const std::vector<double> &new_input, double &prediction_var)
+     std::vector<double> Sklearn::theta_(const std::string &object_name)
+    {
+        std::string expression;
+        expression = "parameters = "+object_name+".theta_\n";
+        boost::python::str str_expression(expression);
+        boost::python::object ignored = boost::python::exec(str_expression, this->main_namespace);
+        boost::python::object out = this->main_namespace["parameters"];
+        std::vector<double> vector_out(1);
+        vector_out[0] = boost::python::extract< double >(out[0][0]);
+        return vector_out;
+    }
+
+
+    double Sklearn::predict(const std::string &object_name, const std::vector<double> &new_input, double &prediction_var)
     {
         std::string expression;
         expression = "Xp = np.array([";
@@ -84,7 +96,7 @@ namespace gp_odometry
             expression += boost::lexical_cast<std::string>(*i)+", ";
         }
         expression += "])\n";
-        expression += "mean_out, var_out = gp.predict(Xp, eval_MSE=True)\n";
+        expression += "mean_out, var_out = "+object_name+".predict(Xp, eval_MSE=True)\n";
         boost::python::str str_expression(expression);
         boost::python::object ignored = boost::python::exec(str_expression, this->main_namespace);
         boost::python::object mean_out = this->main_namespace["mean_out"];
