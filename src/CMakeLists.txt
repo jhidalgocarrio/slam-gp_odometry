@@ -2,9 +2,11 @@
 
 rock_library(gp_odometry
     SOURCES Sklearn.cpp
+            Gpy.cpp
     DEPS_PKGCONFIG python
     DEPS_CMAKE Boost
-    HEADERS Sklearn.hpp)
+    HEADERS Sklearn.hpp
+            Gpy.hpp)
 
 
 #target_link_libraries(gp_odometry ${Boost_LIBRARIES} ${PYTHON_LIBRARIES})

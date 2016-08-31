@@ -109,9 +109,8 @@ namespace gp_odometry
     }
 
 
-	void Sklearn::welcome()
-	{
-		std::cout << "You successfully compiled and executed Sklearn C++ interface. Welcome!" << std::endl;
-	}
-
+    void Sklearn::welcome()
+    {
+        std::cout << "You successfully compiled and executed Sklearn C++ interface. Welcome!" << std::endl;
+    }
 }

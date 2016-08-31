@@ -12,12 +12,12 @@
 
 namespace gp_odometry
 {
-	class Sklearn
-	{
+    class Sklearn
+    {
         protected:
              boost::python::object main_namespace;
 
-		public:
+        public:
 
             /**
              */
@@ -47,12 +47,12 @@ namespace gp_odometry
             double predict(const std::string &object_name, const std::vector<double> &new_input, double &prediction_var);
 
 
-			/**
-			* Print a welcome to stdout
-			* \return nothing
-			*/
-			void welcome();
-	};
+            /**
+            * Print a welcome to stdout
+            * \return nothing
+            */
+            void welcome();
+    };
 
 } // end namespace gp_odometry
 
