@@ -5,7 +5,8 @@ rock_library(gp_odometry
             Gpy.cpp
     DEPS_PKGCONFIG python
     DEPS_CMAKE Boost
-    HEADERS Sklearn.hpp
+    HEADERS GPModel.hpp
+            Sklearn.hpp
             Gpy.hpp)
 
 

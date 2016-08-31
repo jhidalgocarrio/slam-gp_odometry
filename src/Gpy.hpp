@@ -1,24 +1,18 @@
 #ifndef _GP_ODOMETRY_GPY_HPP_
 #define _GP_ODOMETRY_GPY_HPP_
 
-#include <iostream>
-#include <string>
-#include <stdlib.h>
-#include <vector>
-#include <python2.7/Python.h>
-#include <boost/python.hpp>
-#include <boost/lexical_cast.hpp>
-#include <boost/python/extract.hpp>
-#include <boost/python/numeric.hpp>
+#include <gp_odometry/GPModel.hpp>
 
 namespace gp_odometry
 {
-    class Gpy
+    class Gpy: public GPModel
     {
         protected:
              boost::python::object main_namespace;
 
         public:
+
+             ~Gpy() {};
 
             /**
              */
