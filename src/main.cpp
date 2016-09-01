@@ -44,9 +44,9 @@ int main()
 
     gp_gpy.init("./data");
     gp_gpy.load("./data/SparseGP_RBF_xyz_velocities_train_at_500ms.data", "m");
-    gp_gpy.print("m");
+    gp_gpy.print("m.model");
 
-    std::vector<std::string> param_names = gp_gpy.parameterNames("m");
+    std::vector<std::string> param_names = gp_gpy.parameterNames("m.model");
     std::cout<<"Param names["<<param_names.size()<<"]: ";
     for (std::vector<std::string>::const_iterator it = param_names.begin(); it != param_names.end(); ++it)
     {
