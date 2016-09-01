@@ -2,12 +2,11 @@
 
 namespace gp_odometry
 {
-
-    void Sklearn::init(const std::string &file_to_load, const std::string &object_name)
+    void Sklearn::init(const std::string &path_to_init)
     {
         Py_Initialize();
-
         this->main_namespace = boost::python::import("__main__").attr("__dict__");
+
         std::string expression;
         expression = "import numpy as np\nfrom pylab import *\nimport pickle\n";
         expression += "from sklearn.gaussian_process import GaussianProcessRegressor\n";
@@ -18,7 +17,35 @@ namespace gp_odometry
         expression += "def open_object(filename):\n";
         expression += "\twith open(filename, 'rb') as input:\n";
         expression += "\t\treturn pickle.load(input)\n";
-        expression += object_name + " = open_object('";
+        boost::python::str str_expression(expression);
+
+        try
+        {
+            boost::python::object ignored = boost::python::exec(str_expression, this->main_namespace);
+        }
+        catch(boost::python::error_already_set &)
+        {
+            PyObject *ptype, *pvalue, *ptraceback;
+            PyErr_Fetch(&ptype, &pvalue, &ptraceback);
+
+            boost::python::handle<> hType(ptype);
+            boost::python::object extype(hType);
+            boost::python::handle<> hTraceback(ptraceback);
+            boost::python::object traceback(hTraceback);
+
+            //Extract error message
+            std::string strErrorMessage = boost::python::extract<std::string>(pvalue);
+            std::cout<<strErrorMessage<<"\n";
+        }
+
+        return;
+    }
+
+    void Sklearn::load(const std::string &file_to_load, const std::string &object_name)
+    {
+
+        std::string expression;
+        expression = object_name + " = open_object('";
         expression += file_to_load;
         expression += "')\n";
         boost::python::str str_expression(expression);

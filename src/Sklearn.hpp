@@ -12,8 +12,12 @@ namespace gp_odometry
         ~Sklearn(){};
 
         /**
+        */
+        void init(const std::string &path_to_init);
+
+        /**
          */
-        void init(const std::string &file_to_load, const std::string &object_name);
+        void load(const std::string &file_to_load, const std::string &object_name);
 
         /**
          */

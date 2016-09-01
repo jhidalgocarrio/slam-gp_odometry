@@ -6,7 +6,8 @@ int main()
     /** Gaussian Process with Sklearn **/
     gp_odometry::Sklearn gp_sklearn;
 
-    gp_sklearn.init("./data/gp_sklearn_x_delta_pose.data", "gp_x");
+    gp_sklearn.init("./data");
+    gp_sklearn.load("./data/gp_sklearn_x_delta_pose.data", "gp_x");
     gp_sklearn.getParams("gp_x");
     std::vector<double> kernel_params = gp_sklearn.theta_("gp_x");
     std::cout<<"Kernel parameters: ";
@@ -41,7 +42,8 @@ int main()
     /** Gaussian Process with GPy **/
     gp_odometry::Gpy gp_gpy;
 
-    gp_gpy.init("./data/SparseGP_RBF_xyz_velocities_train_at_500ms.data", "m");
+    gp_gpy.init("./data");
+    gp_gpy.load("./data/SparseGP_RBF_xyz_velocities_train_at_500ms.data", "m");
     gp_gpy.print("m");
 
     std::vector<std::string> param_names = gp_gpy.parameterNames("m");

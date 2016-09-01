@@ -2,21 +2,52 @@
 
 using namespace gp_odometry;
 
-void Gpy::init(const std::string &file_to_load, const std::string &object_name)
+void Gpy::init(const std::string &path_to_init)
 {
     Py_Initialize();
 
     this->main_namespace = boost::python::import("__main__").attr("__dict__");
     std::string expression;
     expression = "import numpy as np\nfrom pylab import *\nimport pickle\n";
-    expression += "import GPy\n";
+    expression += "import abc\nimport GPy\nimport sys\n";
+    expression += "sys.path.insert(0,'";
+    expression += path_to_init;
+    expression += "')\n";
+    expression += "from methods import GP_RBF, SVIGP_RBF, SparseGP_RBF, SparseGP_RBF_NL, GP_MAT32, SparseGP_MAT32, GP_MAT52, SparseGP_MAT52\n";
     expression += "def save_object(obj, filename):\n";
     expression += "\twith open(filename, 'wb') as output:\n";
     expression += "\t\tpickle.dump(obj, output, pickle.HIGHEST_PROTOCOL)\n";
     expression += "def open_object(filename):\n";
     expression += "\twith open(filename, 'rb') as input:\n";
     expression += "\t\treturn pickle.load(input)\n";
-    expression += object_name + " = open_object('";
+    boost::python::str str_expression(expression);
+
+    try
+    {
+        boost::python::object ignored = boost::python::exec(str_expression, this->main_namespace);
+    }
+    catch(boost::python::error_already_set &)
+    {
+        PyObject *ptype, *pvalue, *ptraceback;
+        PyErr_Fetch(&ptype, &pvalue, &ptraceback);
+
+        boost::python::handle<> hType(ptype);
+        boost::python::object extype(hType);
+        boost::python::handle<> hTraceback(ptraceback);
+        boost::python::object traceback(hTraceback);
+
+        //Extract error message
+        std::string strErrorMessage = boost::python::extract<std::string>(pvalue);
+        std::cout<<strErrorMessage<<"\n";
+    }
+
+    return;
+}
+
+void Gpy::load(const std::string &file_to_load, const std::string &object_name)
+{
+    std::string expression;
+    expression = object_name + " = open_object('";
     expression += file_to_load;
     expression += "')\n";
     boost::python::str str_expression(expression);

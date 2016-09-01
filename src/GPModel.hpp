@@ -22,7 +22,9 @@ namespace gp_odometry
     public:
         virtual ~GPModel() {  };
 
-        virtual void init(const std::string &file_to_load, const std::string &object_name) = 0;
+        virtual void init(const std::string &path_to_init) = 0;
+
+        virtual void load(const std::string &file_to_load, const std::string &object_name) = 0;
 
         virtual std::vector<double> predict(const std::string &object_name, const std::vector<double> &new_input, std::vector<double> &prediction_var) = 0;
     };
