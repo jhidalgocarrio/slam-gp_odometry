@@ -74,6 +74,17 @@ void Gpy::load(const std::string &file_to_load, const std::string &object_name)
     return;
 }
 
+bool Gpy::isNormalized(const std::string &object_name)
+{
+    std::string expression;
+    expression = "normalize = "+object_name+".preprocess\n";
+    boost::python::str gpy_str_expression(expression);
+    boost::python::object gpy_ignored = boost::python::exec(gpy_str_expression, this->main_namespace);
+    boost::python::object normalize = this->main_namespace["normalize"];
+
+    return  boost::python::extract<bool>(normalize);
+}
+
 void Gpy::print(const std::string &object_name)
 {
     std::string expression;
@@ -85,7 +96,7 @@ void Gpy::print(const std::string &object_name)
 std::vector<std::string> Gpy::parameterNames(const std::string &object_name)
 {
     std::string expression;
-    expression = "param_out = "+object_name+".parameter_names()\n";
+    expression = "param_out = "+object_name+".model.parameter_names()\n";
     boost::python::str gpy_str_expression(expression);
     boost::python::object gpy_ignored = boost::python::exec(gpy_str_expression, this->main_namespace);
     boost::python::object param_out = this->main_namespace["param_out"];

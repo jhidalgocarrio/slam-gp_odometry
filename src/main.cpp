@@ -43,16 +43,21 @@ int main()
     gp_odometry::Gpy gp_gpy;
 
     gp_gpy.init("./data");
-    gp_gpy.load("./data/SparseGP_RBF_xyz_velocities_train_at_500ms.data", "m");
+    gp_gpy.load("./data/SparseGP_RBF_xyz_velocities_train_at_500ms_normalized.data", "m");
     gp_gpy.print("m.model");
 
-    std::vector<std::string> param_names = gp_gpy.parameterNames("m.model");
+    std::vector<std::string> param_names = gp_gpy.parameterNames("m");
     std::cout<<"Param names["<<param_names.size()<<"]: ";
     for (std::vector<std::string>::const_iterator it = param_names.begin(); it != param_names.end(); ++it)
     {
         std::cout<<*it<<' ';
     }
     std::cout<<"\n";
+
+    if (gp_gpy.isNormalized("m"))
+        std::cout<<"m.model is normalized!\n";
+    else
+        std::cout<<"m.model is unnormalized!\n";
 
     static const double arr_gpy[] = {3.54864560e-02,   3.48025449e-02,   3.48598845e-02,
          3.42543200e-02,   3.43560986e-02,   3.38060819e-02,

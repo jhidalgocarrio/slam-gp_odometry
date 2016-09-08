@@ -24,6 +24,10 @@ namespace gp_odometry
 
             /**
              */
+            bool isNormalized(const std::string &object_name);
+
+            /**
+             */
             void print(const std::string &object_name);
 
             /**@brief Get Kernel parameters names
