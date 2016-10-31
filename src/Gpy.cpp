@@ -100,7 +100,7 @@ std::vector<std::string> Gpy::parameterNames(const std::string &object_name)
     boost::python::str gpy_str_expression(expression);
     boost::python::object gpy_ignored = boost::python::exec(gpy_str_expression, this->main_namespace);
     boost::python::object param_out = this->main_namespace["param_out"];
-    std::vector<std::string> vector_out(5);
+    std::vector<std::string> vector_out(4);
     for (register size_t i = 0; i<vector_out.size(); ++i)
     {
         vector_out[i] = boost::python::extract<std::string>(param_out[i]);
