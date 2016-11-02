@@ -9,8 +9,12 @@ import pickle
 class RegressionMethod(object):
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self):
-        self.preprocess = True
+    def __init__(self, normalize = True):
+        self.preprocess = normalize
+        if normalize:
+            print "Normalized regression."
+        else:
+            print "Unnormalized regression"
 
     def _preprocess(self, data,  train):
         """Zero-mean, unit-variance normalization by default"""
