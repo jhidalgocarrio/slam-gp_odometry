@@ -4,7 +4,11 @@ rock_library(gp_odometry
     SOURCES Sklearn.cpp
             Gpy.cpp
     DEPS_PKGCONFIG python
-    DEPS_CMAKE Boost
+    DEPS_PLAIN
+        Boost_SYSTEM
+        Boost_FILESYSTEM
+        Boost_DATE_TIME
+        Boost_PYTHON
     HEADERS GPModel.hpp
             Sklearn.hpp
             Gpy.hpp)
