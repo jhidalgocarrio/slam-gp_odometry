@@ -103,6 +103,20 @@ class GP_MAT52(RegressionMethod):
     def _predict(self, test_data):
         return self.model.predict(test_data)
 
+class SparseGP_LINEAR(RegressionMethod):
+    name = 'SparseGP_LINEAR'
+
+    def _fit(self, train_data):
+        inputs, labels = train_data
+        self.model = GPy.models.SparseGPRegression(inputs, labels,kernel = GPy.kern.Linear(inputs.shape[1], ARD=True) ,num_inducing=100)
+        self.model.likelihood.variance[:] = labels.var()*0.01
+        self.model.optimize(messages=True)
+        return True
+
+    def _predict(self, test_data):
+        return self.model.predict(test_data)
+
+
 class SparseGP_RBF_NL(RegressionMethod):
     name = 'SparseGP_RBF_NL'
 
@@ -130,6 +144,32 @@ class SparseGP_RBF(RegressionMethod):
     def _predict(self, test_data):
         return self.model.predict(test_data)
 
+class SparseGP_RBF_RBF(RegressionMethod):
+    name = 'SparseGP_RBF_RBF'
+
+    def _fit(self, train_data):
+        inputs, labels = train_data
+        self.model = GPy.models.SparseGPRegression(inputs, labels,kernel=GPy.kern.RBF(inputs.shape[-1],ARD=True) + GPy.kern.RBF(inputs.shape[-1],ARD=True) + GPy.kern.Linear(inputs.shape[1], ARD=True)  ,num_inducing=100)
+        self.model.likelihood.variance[:] = labels.var()*0.01
+        self.model.optimize(messages=True)
+        return True
+
+    def _predict(self, test_data):
+        return self.model.predict(test_data)
+
+class SparseGP_MAT32_NL(RegressionMethod):
+    name = 'SparseGP_MAT32_NL'
+
+    def _fit(self, train_data):
+        inputs, labels = train_data
+        self.model = GPy.models.SparseGPRegression(inputs, labels,kernel=GPy.kern.Matern32(inputs.shape[-1],ARD=True), num_inducing=100)
+        self.model.likelihood.variance[:] = labels.var()*0.01
+        self.model.optimize(messages=True)
+        return True
+
+    def _predict(self, test_data):
+        return self.model.predict(test_data)
+
 class SparseGP_MAT32(RegressionMethod):
     name = 'SparseGP_MAT32'
 
@@ -143,6 +183,20 @@ class SparseGP_MAT32(RegressionMethod):
     def _predict(self, test_data):
         return self.model.predict(test_data)
 
+class SparseGP_MAT52_NL(RegressionMethod):
+    name = 'SparseGP_MAT52_NL'
+
+    def _fit(self, train_data):
+        inputs, labels = train_data
+        self.model = GPy.models.SparseGPRegression(inputs, labels,kernel=GPy.kern.Matern52(inputs.shape[-1],ARD=True), num_inducing=100)
+        self.model.likelihood.variance[:] = labels.var()*0.01
+        self.model.optimize(messages=True)
+        return True
+
+    def _predict(self, test_data):
+        return self.model.predict(test_data)
+
+
 class SparseGP_MAT52(RegressionMethod):
     name = 'SparseGP_MAT52'
 
@@ -155,8 +209,6 @@ class SparseGP_MAT52(RegressionMethod):
 
     def _predict(self, test_data):
         return self.model.predict(test_data)
-
-
 
 # class MRD_RBF(RegressionMethod):
 #     name = 'MRD_RBF'
