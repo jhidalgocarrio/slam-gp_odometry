@@ -43,9 +43,7 @@ int main()
     gp_odometry::Gpy gp_gpy;
 
     gp_gpy.init("./scripts");
-    gp_gpy.load("./data/SparseGP_RBF_xyz_velocities_train_at_500ms_normalized.data", "m");
-    //gp_gpy.load("./data/SparseGP_RBF_xyz_velocities_train_at_1s_normalized.data", "m");
-    //gp_gpy.load("./data/GP_RBF_xyz_velocities_train_at_1s_normalized.data", "m");
+    gp_gpy.load("./data/SparseGP_RBF_NL_xyz_velocities_train_at_1s_normalized.data", "m");
     gp_gpy.print("m.model");
 
     std::vector<std::string> param_names = gp_gpy.parameterNames("m");
