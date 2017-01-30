@@ -6,6 +6,7 @@ int main()
     /** Gaussian Process with Sklearn **/
     gp_odometry::Sklearn gp_sklearn;
 
+    std::cout<<"################# SKLEARN ######################\n";
     gp_sklearn.init("./scripts");
     gp_sklearn.load("./data/gp_sklearn_x_delta_pose.data", "gp_x");
     gp_sklearn.getParams("gp_x");
@@ -41,6 +42,7 @@ int main()
 
     /** Gaussian Process with GPy **/
     gp_odometry::Gpy gp_gpy;
+    std::cout<<"\n################# GPy ######################\n";
 
     gp_gpy.init("./scripts");
     gp_gpy.load("./data/SparseGP_RBF_NL_xyz_velocities_train_at_1s_normalized.data", "m");
